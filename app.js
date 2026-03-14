@@ -56,6 +56,9 @@ function initializeApp() {
     startAutoRefresh();
     registerServiceWorker();
     initAnimations();
+    
+    // Clear any existing sample data on first load after our changes
+    clearExistingSampleDataIfNeeded();
 }
 
 // ========================================
@@ -471,7 +474,7 @@ function loadFromStorage() {
         AppState.theme = savedTheme || 'dark';
         AppState.settings = savedSettings ? JSON.parse(savedSettings) : {};
     } else {
-        // First visit - initialize empty
+        // First visit - initialize empty (no sample data)
         AppState.firstVisit = true;
         AppState.transactions = [];
         AppState.budgets = [];
@@ -1755,6 +1758,25 @@ function deleteAllData() {
             checkWelcomeState();
             showToast('All data has been deleted', 'success');
         }
+    }
+}
+
+// Function to clear existing sample data on app load
+function clearExistingSampleDataIfNeeded() {
+    // Check if we have data that looks like sample data (30+ transactions)
+    var hasSampleData = AppState.transactions.length >= 30;
+    
+    if (hasSampleData) {
+        // Clear the sample data and start fresh
+        AppState.transactions = [];
+        AppState.budgets = [];
+        saveToStorage();
+        
+        // Show a toast to inform the user
+        showToast('Sample data cleared. App is now fresh and ready to use!', 'info');
+        
+        // Update the dashboard to reflect the fresh state
+        updateDashboard();
     }
 }
 
