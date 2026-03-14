@@ -452,13 +452,31 @@ function animateDashboard() {
 // ========================================
 
 function loadFromStorage() {
-    // Clear all data for fresh start
-    localStorage.clear();
+    // Check if this is first visit
+    var firstVisit = localStorage.getItem('budgetwise_first_visit');
     
-    AppState.firstVisit = true;
-    AppState.transactions = [];
-    AppState.budgets = [];
-    AppState.notifications = [];
+    if (firstVisit === 'false') {
+        // Not first visit - load existing data from localStorage
+        AppState.firstVisit = false;
+        
+        var savedTransactions = localStorage.getItem('budgetwise_transactions');
+        var savedBudgets = localStorage.getItem('budgetwise_budgets');
+        var savedCurrency = localStorage.getItem('budgetwise_currency');
+        var savedTheme = localStorage.getItem('budgetwise_theme');
+        var savedSettings = localStorage.getItem('budgetwise_settings');
+        
+        AppState.transactions = savedTransactions ? JSON.parse(savedTransactions) : [];
+        AppState.budgets = savedBudgets ? JSON.parse(savedBudgets) : [];
+        AppState.currency = savedCurrency || 'INR';
+        AppState.theme = savedTheme || 'dark';
+        AppState.settings = savedSettings ? JSON.parse(savedSettings) : {};
+    } else {
+        // First visit - initialize empty
+        AppState.firstVisit = true;
+        AppState.transactions = [];
+        AppState.budgets = [];
+        AppState.notifications = [];
+    }
 }
 
 function saveToStorage() {
@@ -711,7 +729,11 @@ function handleGetStarted() {
     localStorage.setItem('budgetwise_first_visit', 'false');
     AppState.firstVisit = false;
     
-    generateSampleData();
+    // Start with empty transactions - no sample data
+    AppState.transactions = [];
+    AppState.budgets = [];
+    
+    saveToStorage();
     
     document.getElementById('welcomeScreen').classList.add('hidden');
     document.getElementById('appContainer').classList.remove('hidden');
