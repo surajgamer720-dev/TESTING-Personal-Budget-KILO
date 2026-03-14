@@ -1,8 +1,8 @@
-# BudgetWise - Personal Budget Tracking PWA
+# MY BUDGET - Personal Budget Tracking PWA
 
 A comprehensive Progressive Web Application for tracking personal finances, managing budgets, and analyzing spending habits with beautiful visualizations and smart insights.
 
-![BudgetWise Logo](icons/icon.svg)
+![MY BUDGET Logo](icons/icon.svg)
 
 ## ✨ Features
 

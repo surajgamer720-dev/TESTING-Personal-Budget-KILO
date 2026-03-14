@@ -1,4 +1,4 @@
-// BudgetWise Service Worker
+// MY BUDGET Service Worker
 // Provides offline functionality and caching
 
 const CACHE_NAME = 'budgetwise-v1';

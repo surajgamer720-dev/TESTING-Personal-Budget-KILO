@@ -1,6 +1,6 @@
 {
-    "name": "BudgetWise - Personal Budget Tracker",
-    "short_name": "BudgetWise",
+    "name": "MY BUDGET - Personal Budget Tracker",
+    "short_name": "MY BUDGET",
     "description": "Track your finances, manage budgets, and achieve your financial goals with this comprehensive personal budget tracking PWA",
     "start_url": "/",
     "display": "standalone",
